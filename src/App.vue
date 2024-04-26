@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 import { onMounted, ref } from "vue";
 
@@ -30,6 +28,7 @@ if (window.matchMedia("(display-mode: standalone)").matches) {
   setInterval(() => {
     checkInstall();
   }, 1000);
+
   window.addEventListener("beforeinstallprompt", (event) => {
     // 阻止默认的安装提示
     event.preventDefault();
@@ -49,98 +48,54 @@ const handleShowInstall = () => {
     }
   });
 };
+
+const handleOpen = () => {
+  window.open("https://files.lyb.im/test/index.html", "_blank");
+};
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="Hello World!V1.4" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
-
-  <a href="/test/index.html" target="_blank" v-if="is_install">
-    <button @click="handleShowInstall" style="font-size: 50px">点击打开</button>
-  </a>
+  <button @click="handleOpen" style="font-size: 50px" v-if="is_install">
+    点击打开
+  </button>
   <button @click="handleShowInstall" style="font-size: 50px" v-else>
     {{ text }}
   </button>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+html,
+body,
+#app {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  height: 100%;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
 }
 
-nav a.router-link-exact-active:hover {
+button {
+  font-size: 50px;
   background-color: transparent;
-}
+  border: 0.1em solid #fff;
+  padding: 0.5em;
+  transition: 0.25s;
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  &:hover {
+    background-color: #fff;
+    color: #000;
   }
 }
 </style>
