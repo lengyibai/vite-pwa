@@ -33,6 +33,12 @@ export default defineConfig({
       includeAssets: ["favicon.svg", "apple-touch-icon.png"],
       // 清单文件配置
       manifest: {
+        related_applications: [
+          {
+            platform: "webapp",
+            url: "https://files.lyb.im/test/manifest.webmanifest",
+          },
+        ],
         // 显示模式
         display: "standalone",
         // 应用名称
